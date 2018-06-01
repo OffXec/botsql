@@ -2,7 +2,19 @@
 # coded by github.com/thelinuxchoice/botsql
 # instagram: @thelinuxchoice
 
+
+checktor() {
+
+check=$(curl --socks5-hostname localhost:9050 -s https://check.torproject.org > /dev/null; echo $?)
+
+if [[ "$check" -gt 0 ]]; then
+printf "\e[1;91mPlease, check your TOR Connection! Just type tor or service tor start\n\e[0m"
+exit 1
+fi
+
+}
 scan() {
+checktor
 read -p $'\e[1;92mAtscan directory (e.g. /tools/ATSCAN): \e[0m' pathatscan
 read -p $'\e[1;92mSqlmap directory (e.g /tools/sqlmap): \e[0m' pathsqlmap
 default_dork="dorks.txt"
